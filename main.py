@@ -67,7 +67,6 @@ def generateFiles(path):
 def getFiles(path):
     
     folder = path + '/' + os.listdir(path)[0] + '/'
-    print(folder)
     
     for x in range(100):
         fileC = folder + '{0:02}'.format(x) + 'c.txt'
@@ -120,18 +119,8 @@ def send(message, path):
     f.close()
     removeFile(fileC)
 
-    
 
-
-
-send('test', 'folder')
-
-a = "110111111011001100"
-b = "110010111011001110000111000011000010"
-y = int(a,2) ^ int(b,2)
-print('{0:b}'.format(y))
-
-'''if __name__ != '__main__':
+if __name__ != '__main__':
     print("This file was loaded as a module.")
 else:
     import argparse as ap
@@ -139,8 +128,19 @@ else:
     p = ap.ArgumentParser()
     #p.add_argument("-g", '--generate', action='store_true', help='generate files')
     p.add_argument('folder', help='parent folder')
+    p.add_argument("-t", '--text', help='text')
     args = p.parse_args()
     
+    folder = ''
     if args.folder:
+        folder = args.folder
         generateFiles(args.folder)
-'''
+    else:
+        generateFiles('folder')
+    
+    if args.text:
+        send(args.text, folder)
+    else:
+        text = input("Enter the text : ") 
+        send(text, folder)
+
