@@ -64,38 +64,4 @@ else:
     
     if args.generate:
         generateFiles(args.folder)
-
-
-'''
-if __name__ != '__main__':
-    print("This file was loaded as a module.")
-else:
-    import argparse as ap
-
-    p = ap.ArgumentParser()
-    p.add_argument("-w", '--write', action='store_true', help='writing mode')
-    p.add_argument("-f", '--image', help='image path')
-    p.add_argument("-t", '--text', help='text')
-    p.add_argument('output', help='image output')
-    args = p.parse_args()
-
-    if args.write:
-        if args.image and args.text:
-            image = args.image
-            text = args.text
-        elif args.image:
-            text = input("Enter the text you want to hide : ") 
-            image = args.image
-        elif args.text:
-            image = input("Enter the name of your image : ")
-            text = args.text
-
-        else:
-            image = input("Enter the name of your image : ") 
-            text = input("Enter the text you want to hide : ") 
         
-        encode(image, text, args.output)
-
-    else:
-        decode(args.output)
-'''
