@@ -1,6 +1,7 @@
 import sys
 import os
 import binascii
+import random
 
 def stringToBinary(str):
     ''' (str) -> str
@@ -28,6 +29,17 @@ def binaryToString(string):
     return "".join([chr(int(binary, 2)) for binary in out])
 
 
+def random384():
+    rand = ''
+    for i in range(384):
+        rand += str(random.randint(0, 1))
+    return rand
+
+def random2000Byte():
+    rand = ''
+    for i in range(16000):
+        rand += str(random.randint(0, 1))
+    return rand
 
 def generateFiles(path):
     try:
@@ -37,18 +49,20 @@ def generateFiles(path):
     else:
         print ("Successfully created the directory %s " % path)
 
-    folder = path + '/' + '{0:04}'.format(len(os.listdir('folder')))
+    folder = path + '/' + '{0:04}'.format(len(os.listdir(path)))
     os.mkdir(folder)
 
     for x in range(100):
         file = folder + '/' + '{0:02}'.format(x)
         f = open(file + 'c.txt', "w")
+        f.write(random2000Byte())
         f.close()
         f = open(file + 'p.txt', "w")
+        f.write(random384())
         f.close()
         f = open(file + 's.txt', "w")
+        f.write(random384())
         f.close()
-
 
 
 
@@ -64,4 +78,3 @@ else:
     
     if args.generate:
         generateFiles(args.folder)
-        
