@@ -64,17 +64,83 @@ def generateFiles(path):
         f.write(random384())
         f.close()
 
+def getFiles(path):
+    
+    folder = path + '/' + os.listdir(path)[0] + '/'
+    print(folder)
+    
+    for x in range(100):
+        fileC = folder + '{0:02}'.format(x) + 'c.txt'
+        fileS = folder + '{0:02}'.format(x) + 's.txt'
+        fileP = folder + '{0:02}'.format(x) + 'p.txt'
+        fileT = path + '-' + os.listdir(path)[0] + '-' + '{0:02}'.format(x) + 't.txt'
+        
+        if os.path.isfile(fileC):
+            break
+
+        
+    return fileC,  fileS, fileP, fileT
+
+    
+def xor(message, fileC):
+    f = open(fileC, "r")
+    c = f.read()
+    binaryMesaage = stringToBinary(message)
+    y = int(binaryMesaage,2) ^ int(c,2)
+    f.close()
+
+    return y
+
+def removeFile(fileC):
+    os.remove(fileC)
+
+def addPreSuf(encryptMessage, fileS, fileP):
+
+    f = open(fileS, "r")
+    suf = f.read()
+    f.close()
+    f = open(fileP, "r")
+    pre = f.read()
+    f.close()
+    res = str(suf) + str(encryptMessage)
+    res += str(pre)
+
+    return res
+
+def send(message, path):
+    
+    fileC, fileS, fileP, fileT = getFiles(path)
+
+    encryptMessage = xor(message, fileC)
+
+    encryptMessage = addPreSuf(encryptMessage, fileS, fileP)
+
+    f = open(fileT, "w")
+    f.write(encryptMessage)
+    f.close()
+    removeFile(fileC)
+
+    
 
 
-if __name__ != '__main__':
+
+send('test', 'folder')
+
+a = "110111111011001100"
+b = "110010111011001110000111000011000010"
+y = int(a,2) ^ int(b,2)
+print('{0:b}'.format(y))
+
+'''if __name__ != '__main__':
     print("This file was loaded as a module.")
 else:
     import argparse as ap
 
     p = ap.ArgumentParser()
-    p.add_argument("-g", '--generate', action='store_true', help='generate files')
+    #p.add_argument("-g", '--generate', action='store_true', help='generate files')
     p.add_argument('folder', help='parent folder')
     args = p.parse_args()
     
-    if args.generate:
+    if args.folder:
         generateFiles(args.folder)
+'''
